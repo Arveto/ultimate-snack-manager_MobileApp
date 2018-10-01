@@ -1,17 +1,18 @@
 {
-    "name": "UltimateSnackManagermanager_mobileApp",
-    "displayName": "ISTY Caféteria",
+    "name": "io.onsen.sampleapp",
+    "displayName": "Onsen UI Sample App",
     "version": "1.0.0",
-    "description": "A sleek and intuitive UI to manage the cafeterias of the future. The cordova mobile app",
+    "description": "A sample Apache Cordova application that responds to the deviceready event.",
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
     },
-    "author": "The Arveto Developement Team",
-    "license": "GPL",
+    "author": "Apache Cordova Team",
+    "license": "Apache-2.0",
     "dependencies": {
-        "cordova-android": "^7.1.1",
-        "cordova-plugin-whitelist": "^1.3.3"
+        "cordova-android": "^7.0.0",
+        "cordova-plugin-whitelist": "^1.3.3",
+        "framework7": "^3.2.1"
     },
     "cordova": {
         "plugins": {

@@ -1,0 +1,60 @@
+<div class="page" data-name="about">
+  <div class="navbar">
+    <div class="navbar-inner sliding">
+      <div class="left">
+        <a href="#" class="link back">
+          <i class="icon icon-back"></i>
+          <span class="ios-only">Back</span>
+        </a>
+      </div>
+      <div class="title">Commander pour : <b class="orderFor"></b></div>
+    </div>
+  </div>
+  <div class="page-content">
+
+    <div class="block">
+      <div class="block" id="orderProducts">
+      </div>
+
+      <div class="sheet-modal commandes">
+        <div class="toolbar">
+          <div class="toolbar-inner sheet-close">
+            <div class="left">
+              <div class="chip color-red" style="margin-left: 10%;">
+                <p class="chip-label total">0 €</p>
+              </div>
+            </div>
+            <div class="button button-fill color-red" onclick="clearBasket()">
+              CLEAR
+            </div>
+            <div class="button button-fill color-green" onclick="submitOrder()">
+              OK !
+            </div>
+            <div class="right">
+              <a class="link" href="#">
+                <i class="material-icons">keyboard_arrow_down</i>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="sheet-modal-inner">
+          <div class="page" style="overflow-y: scroll;">
+            <div class="list" style="overflow-y: scroll; margin-top: 0;">
+              <ul class="commandList" id="ordering_orderList"></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="toolbar tabbar toolbar-bottom-md link sheet-open" data-sheet=".commandes">
+    <div class="toolbar-inner">
+      <p><a class="link" style="margin-left: 15%">Commande</a>
+        <div class="chip color-red" style="margin-left: 10%;">
+          <p class="chip-label total">0 €</p>
+        </div>
+      </p>
+      <i class="material-icons">keyboard_arrow_up</i>
+    </div>
+  </div>
+</div>

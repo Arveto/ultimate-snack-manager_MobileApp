@@ -1,0 +1,15 @@
+
+img{
+  border-radius: 50%;
+  width: 30%;
+  display: inline;
+}
+
+div#userprofil{
+  padding: 5%;
+  font-style: bold;
+}
+
+#adminPannel, #adminFab{
+  display: none;
+}

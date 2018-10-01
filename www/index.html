@@ -1,23 +1,392 @@
 <!DOCTYPE html>
-
 <html>
-    <head>
-        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
-        <meta name="format-detection" content="telephone=no">
-        <meta name="msapplication-tap-highlight" content="no">
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
-        <link rel="stylesheet" type="text/css" href="css/index.css">
-        <title>Hello World</title>
-    </head>
-    <body>
-        <div class="app">
-            <h1>Apache Cordova</h1>
-            <div id="deviceready" class="blink">
-                <p class="event listening">Connecting to Device</p>
-                <p class="event received">Device is Ready</p>
+
+<head>
+  <meta charset="utf-8"></meta>
+  <meta http-equiv="Content-Security-Policy" content="default-src * 'self' 'unsafe-inline' 'unsafe-eval' data: gap: content:"></meta>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui, viewport-fit=cover"></meta>
+  <meta name="apple-mobile-web-app-capable" content="yes"></meta>
+  <meta name="apple-mobile-web-app-status-bar-style" content="default"></meta>
+  <meta name="theme-color" content="#2196f3"></meta>
+  <meta name="format-detection" content="telephone=no"></meta>
+  <meta name="msapplication-tap-highlight" content="no"></meta>
+  <title>ISTY</title>
+
+	<script src="http://HOSTNAME/socket.io/socket.io.js"></script> //<!-- XXX: REPLACE BY THE HOST'S IP -->
+  <link rel="stylesheet" href="framework7/css/framework7.min.css"></link>
+  <link rel="stylesheet" href="css/icons.css"></link>
+  <link rel="stylesheet" href="css/app.css"></link>
+</head>
+
+<body>
+  <div id="app">
+    <!-- Status bar overlay for fullscreen mode-->
+    <div class="statusbar"></div>
+    <!-- Left panel with cover effect-->
+    <div class="panel panel-left panel-cover">
+      <div class="view">
+        <div class="page">
+          <div class="navbar">
+            <div class="navbar-inner">
+              <div class="title">Moldu Panel</div>
             </div>
+          </div>
+          <div class="page-content">
+            <div class="block panel-close">
+              <div id="userprofil" class="card card-outline row link login-screen-open elevation-5" data-login-screen="#my-login-screen">
+                <img class="col" src="https://api.adorable.io/avatars/100/placeholder.png"></img>
+                <div class="col">
+                  <p id="fiName"><b>Connexion</b></p>
+                  <p id="faName"></p>
+                </div>
+              </div>
+              <div class="card card-outline row elevation-3" style="padding: 5%;">
+                <div class="col chip color-white">
+                  <p class="chip-label" style="color: black;">CREDIT :</p>
+                </div>
+                <div class="col chip color-red">
+                  <p class="chip-label userprofileBalance">0 €</p>
+                </div>
+              </div>
+
+              <div class="block-title">Navigation</div>
+              <div class="list">
+                <ul>
+                  <li>
+                    <a href="/stats/" id="userStats" class="item-content item-link">
+                      <div class="item-inner">
+                        <div class="item-title">Mes stats</div>
+                      </div>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/404/" class="item-content item-link">
+                      <div class="item-inner">
+                        <div class="item-title">Action</div>
+                      </div>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <a href="/about/" class="button">
+                <div class="item-inner">
+                  <div class="item-title">About Arveto</div>
+                </div>
+              </a>
+            </div>
+          </div>
         </div>
-        <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>
-    </body>
+      </div>
+    </div>
+    <!-- Right panel with reveal effect-->
+    <div class="panel panel-right panel-reveal">
+      <div class="view">
+        <div class="page">
+          <div class="navbar">
+            <div class="navbar-inner">
+              <div class="title">Admin Panel</div>
+            </div>
+          </div>
+          <div class="page-content">
+            <div class="block panel-close">
+
+              <div class="block-title">Navigation</div>
+              <div class="list">
+                <ul>
+                  <li>
+                    <a href="/shoppingList/" class="item-content item-link">
+                      <div class="item-inner">
+                        <div class="item-title">Liste de courses</div>
+                      </div>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/usersList/" class="item-content item-link gotoUsersList">
+                      <div class="item-inner">
+                        <div class="item-title">Prendre commande</div>
+                      </div>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/usersList/" class="item-content item-link gotoPreorder">
+                      <div class="item-inner">
+                        <div class="item-title">Précommandes</div>
+                      </div>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <a href="/404/" class="button">
+                <div class="item-inner">
+                  <div class="item-title">Autre</div>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Your main view, should have "view-main" class -->
+    <div class="view view-main ios-edges">
+      <!-- Page, data-name contains page name which can be used in callbacks -->
+      <div class="page" data-name="home">
+        <div class="fab fab-right-bottom color-orange" id="adminFab">
+          <a href="#">
+            <i class="icon material-icons md-only">add</i>
+            <i class="icon material-icons md-only">close</i>
+          </a>
+          <div class="fab-buttons fab-buttons-top">
+            <a class="fab-label-button" href="#">
+              <span><i class="material-icons">shopping_basket</i></span>
+              <span class="fab-label">Shoppinglist</span>
+            </a>
+            <a class="fab-label-button" href="#">
+              <span><i class="material-icons">local_cafe</i></span>
+              <span class="fab-label">Order</span>
+            </a>
+            <a class="fab-label-button gotoPreorder" href="/usersList/">
+              <span><i class="material-icons">watch_later</i></span>
+              <span class="fab-label">Preorders</span>
+            </a>
+          </div>
+        </div>
+        <!-- Top Navbar -->
+        <div class="navbar">
+          <div class="navbar-inner">
+            <div class="left">
+              <a href="#" class="link icon-only panel-open" data-panel="left">
+                <i class="icon f7-icons ios-only">menu</i>
+                <i class="icon material-icons md-only">menu</i>
+              </a>
+            </div>
+            <div class="title sliding">ISTY</div>
+            <div class="right">
+              <a href="#" class="link icon-only panel-open" id="adminPannel" data-panel="right">
+                <i class="icon f7-icons ios-only">menu</i>
+                <i class="icon material-icons md-only">menu</i>
+              </a>
+            </div>
+          </div>
+        </div>
+        <!-- Toolbar-->
+        <div class="toolbar tabbar">
+          <div class="toolbar-inner">
+            <a href="#tab-1" class="tab-link tab-link-active">News</a>
+            <a href="#tab-2" class="tab-link">Cafet</a>
+            <a href="#tab-3" class="tab-link">Chat</a>
+          </div>
+        </div>
+        <!-- Scrollable page content-->
+        <div class="tabs-swipeable-wrap">
+          <div class="tabs">
+
+            <div id="tab-1" class="tab tab-active">
+
+              <div class="page-content">
+                <div class="block">
+                  <div class="card card-outline">
+                    <div class="card-header">WEI#2k18</div>
+                    <div class="card-content card-content-padding">Be ready <br></br> It's gonna be awesome</div>
+                    <div class="card-footer">BDE ESSAIM</div>
+                  </div>
+                  <div class="card card-outline">
+                    <div class="card-header">CAFET NEW</div>
+                    <div class="card-content card-content-padding">New product ! <br></br> We got beers !</div>
+                    <div class="card-footer">Cafet</div>
+                  </div>
+                  <div class="card card-outline">
+                    <div class="card-header">CAFET NEW</div>
+                    <div class="card-content card-content-padding">All hail to the guy who was naked yesterday on the cafteria bar...</div>
+                    <div class="card-footer">Cafet</div>
+                  </div>
+                  <div class="card card-outline">
+                    <div class="card-header">AFTERWORK</div>
+                    <div class="card-content card-content-padding">IT IS STRICTLY FORBIDDEN TO RAPE THE BOSS' DOG.<br></br> WTF GUYS. WTF</div>
+                    <div class="card-footer">BDE ESSAIM -- D'Estrée</div>
+                  </div>
+                  <div class="card card-outline">
+                    <div class="card-header">N2I#2k18</div>
+                    <div class="card-content card-content-padding">Tanks to the Arveto Development team who brilliantly represented us during this year's N2I<br></br> It's was be awesome guys. Awesome</div>
+                    <div class="card-footer">BDE ADEI</div>
+                  </div>
+                  <div class="card card-outline">
+                    <div class="card-header">PLACEHOLDER</div>
+                    <div class="card-content card-content-padding">This is a placeholder</div>
+                    <div class="card-footer">PLACEHOLDER</div>
+                  </div>
+                  <div class="card card-outline">
+                    <div class="card-header">PLACEHOLDER</div>
+                    <div class="card-content card-content-padding">This is a placeholder</div>
+                    <div class="card-footer">PLACEHOLDER</div>
+                  </div>
+                  <div class="card card-outline">
+                    <div class="card-header">PLACEHOLDER</div>
+                    <div class="card-content card-content-padding">This is a placeholder</div>
+                    <div class="card-footer">PLACEHOLDER</div>
+                  </div>
+                  <div class="card card-outline">
+                    <div class="card-header">PLACEHOLDER</div>
+                    <div class="card-content card-content-padding">This is a placeholder</div>
+                    <div class="card-footer">PLACEHOLDER</div>
+                  </div>
+                  <div class="card card-outline">
+                    <div class="card-header">PLACEHOLDER</div>
+                    <div class="card-content card-content-padding">This is a placeholder</div>
+                    <div class="card-footer">PLACEHOLDER</div>
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
+
+            <div id="tab-2" class="page page-content tab">
+              <div class="block">
+                    <div class="block" id="PrecoProducts">
+                      <div class="block-title">
+                        <p>Il faut que tu sois loggé ET connecté à internet :/</p>
+                      </div>
+                    </div>
+
+                <div class="sheet-modal commandes">
+                  <div class="toolbar link">
+                    <div class="toolbar-inner sheet-close">
+                      <div class="left">
+                        <p>
+                          <div class="chip color-red" style="margin-left: 10%;">
+                            <p class="chip-label total">0 €</p>
+                          </div>
+                        </p>
+                      </div>
+                      <div class="button button-fill color-red" onclick="clearBasket()">
+                        CLEAR
+                      </div>
+                      <div class="button button-fill color-green" onclick="submitOrder()">
+                        OK !
+                      </div>
+                      <div class="right">
+                        <a class="link" href="#">
+                          <i class="material-icons">keyboard_arrow_down</i>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="sheet-modal-inner">
+                    <div class="page" style="overflow-y: scroll;">
+                      <div class="list" style="overflow-y: scroll; margin-top: 0;">
+                        <ul class="commandList" id="preorderList">
+
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="toolbar tabbar toolbar-bottom-md link sheet-open" data-sheet=".commandes">
+                <div class="toolbar-inner">
+                  <p><a class="link" style="margin-left: 15%">Commande</a>
+                    <div class="chip color-red" style="margin-left: 10%;">
+                      <p class="chip-label total">0 €</p>
+                    </div>
+                  </p>
+                  <i class="material-icons">keyboard_arrow_up</i>
+                </div>
+              </div>
+            </div>
+
+            <div id="tab-3" class="page-content tab">
+              <div class="block-title">
+                <p>[WORK IN PROGRESS]</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Popup -->
+      <div class="popup" id="my-popup">
+        <div class="view">
+          <div class="page">
+            <div class="navbar">
+              <div class="navbar-inner">
+                <div class="title">Popup</div>
+                <div class="right">
+                  <a href="#" class="link popup-close">Close</a>
+                </div>
+              </div>
+            </div>
+            <div class="page-content">
+              <div class="block">
+                <p>Popup content goes here.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Login Screen -->
+      <div class="login-screen" id="my-login-screen">
+        <div class="view">
+          <div class="page">
+            <div class="page-content login-screen-content">
+              <div class="login-screen-title">Login</div>
+              <div class="list">
+                <ul>
+                  <li class="item-content item-input">
+                    <div class="item-inner">
+                      <div class="item-title item-label">Email</div>
+                      <div class="item-input-wrap">
+                        <input type="text" name="username" placeholder="Email" id="email"></input>
+                    </div>
+                    </div>
+                  </li>
+                  <li class="item-content item-input">
+                    <div class="item-inner">
+                      <div class="item-title item-label">Password</div>
+                      <div class="item-input-wrap">
+                        <input type="password" name="password" placeholder="Mot de passe" id="password"></input>
+                    </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <div class="list">
+                <ul>
+                  <li>
+                    <a href="#" class="button button-fill login-button" id="login">Sign In</a>
+                  </li>
+                </ul>
+                <div class="block-footer">Il faut déjà avoir un compte pour se connecter.</div>
+                <div class="block-footer"><a href="#" class="link login-screen-close">Back</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+  </div>
+  <!-- Cordova -->
+  <!-- <script src="cordova.js"></script> -->
+
+  <!-- Framework7 library -->
+  <script src="framework7/js/framework7.min.js"></script>
+
+  <!-- App routes -->
+  <script src="js/routes.js"></script>
+
+  <!-- JS scripts -->
+  <script src="js/app.js"></script>
+  <script src="js/notifications.js"></script>
+  <script src="js/sha512.js"></script>
+  <script src="js/preorders.js"></script>
+  <script src="js/order.js"></script>
+  <script src="js/login.js"></script>
+  <script src="js/index.js"></script>
+  <script src="js/usersList.js"></script>
+  <script src="js/socketEvents.js"></script>
+</body>
+
 </html>
